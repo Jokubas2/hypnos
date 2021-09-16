@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
         jumpForgiveness *= 50;
         jumpLength *= 50;
 
-        Physics.gravity = new Vector3(0, -9.83f, 0);
+        //Physics.gravity = new Vector3(0, -9.83f, 0);
     }
 
     void OnCollisionStay(Collision collision)
