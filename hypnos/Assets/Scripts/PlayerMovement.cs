@@ -103,6 +103,10 @@ public class PlayerMovement : MonoBehaviour
             Vector3 direction = new Vector3(0.0f, 0.0f, -1.0f);
             rb.AddForce(direction * movementSpeed, ForceMode.Acceleration);
         }
+
+
+
+
     }
 
 
