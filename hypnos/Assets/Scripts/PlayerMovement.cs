@@ -47,6 +47,11 @@ public class playerMovement : MonoBehaviour
     private Vector3 normalVector = Vector3.up;
     private Vector3 wallNormalVector;
 
+    //Gravity
+    private changeGravity ChangeGravity;
+    [NonSerialized]
+    public Vector3 gDirection;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -58,6 +63,8 @@ public class playerMovement : MonoBehaviour
         playerScale = transform.localScale;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        gDirection = ChangeGravity.gravityDirection;
     }
 
 
@@ -71,6 +78,8 @@ public class playerMovement : MonoBehaviour
         MyInput();
         Look();
         speed();
+
+        //gDirection = ChangeGravity.gravityDirection;
     }
 
     /// <summary>
@@ -112,7 +121,7 @@ public class playerMovement : MonoBehaviour
     private void Movement()
     {
         //Extra gravity
-        rb.AddForce(Vector3.down * Time.deltaTime * 10);
+        rb.AddForce(gDirection/*Vector3.down*/ * Time.deltaTime * 10);
 
         //Find actual velocity relative to where player is looking
         Vector2 mag = FindVelRelativeToLook();
@@ -130,7 +139,7 @@ public class playerMovement : MonoBehaviour
         //If sliding down a ramp, add force down so player stays grounded and also builds speed
         if (crouching && grounded && readyToJump)
         {
-            rb.AddForce(Vector3.down * Time.deltaTime * 3000);
+            rb.AddForce(gDirection/*Vector3.down*/ * Time.deltaTime * 3000);
             return;
         }
 
