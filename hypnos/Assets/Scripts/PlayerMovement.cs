@@ -16,7 +16,10 @@ public class playerMovement : MonoBehaviour
     private float sensMultiplier = 1f;
 
     //Movement
-    public float moveSpeed = 4500;
+    public float groundSpeed = 4500;
+    public float airSpeed = 4500;
+    float moveSpeed;
+
     public float maxSpeed = 20;
     public bool grounded;
     public LayerMask whatIsGround;
@@ -51,6 +54,7 @@ public class playerMovement : MonoBehaviour
 
     void Start()
     {
+        moveSpeed = groundSpeed;
         playerScale = transform.localScale;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -66,6 +70,7 @@ public class playerMovement : MonoBehaviour
     {
         MyInput();
         Look();
+        speed();
     }
 
     /// <summary>
@@ -191,11 +196,24 @@ public class playerMovement : MonoBehaviour
 
         //Rotate, and also make sure we dont over- or under-rotate.
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -105f, 105f);
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         //Perform the rotations
         playerCam.transform.localRotation = Quaternion.Euler(xRotation, desiredX, 0);
         orientation.transform.localRotation = Quaternion.Euler(0, desiredX, 0);
+
+        
+        /*float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime * sensMultiplier;
+        float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime * sensMultiplier;
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -105f, 105f);
+
+        playerCam.transform.localRotation = Quaternion.Euler(xRotation,0,0);
+
+        transform.Rotate(Vector3.up * mouseX);*/
+
+        
     }
 
     private void CounterMovement(float x, float y, Vector2 mag)
@@ -203,8 +221,8 @@ public class playerMovement : MonoBehaviour
         if (!grounded || jumping) return;
 
         //Slow down sliding
-        if (crouching)
-        {
+        if (crouching && grounded)
+        { 
             rb.AddForce(moveSpeed * Time.deltaTime * -rb.velocity.normalized * slideCounterMovement);
             return;
         }
@@ -291,5 +309,13 @@ public class playerMovement : MonoBehaviour
     private void StopGrounded()
     {
         grounded = false;
+    }
+
+    private void speed()
+    {
+        if (grounded)
+            moveSpeed = groundSpeed;
+        if (!grounded)
+            moveSpeed = airSpeed;
     }
 }
