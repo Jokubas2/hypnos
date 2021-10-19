@@ -64,7 +64,7 @@ public class playerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        gDirection = ChangeGravity.gravityDirection;
+        //gDirection = ChangeGravity.gDirection;
     }
 
 
@@ -79,7 +79,7 @@ public class playerMovement : MonoBehaviour
         Look();
         speed();
 
-        //gDirection = ChangeGravity.gravityDirection;
+        //gDirection = ChangeGravity.getGravity();
     }
 
     /// <summary>
