@@ -45,11 +45,13 @@ public class changeGravity : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             setGravity();
+            PlayerRotation.setRotation(gravityDirection);
         }
 
         if(isCenter)
         {
             updateGravity();
+            PlayerRotation.setRotation(gravityDirection);
         }
 
         //Debug.Log(gravityPoint);
@@ -58,7 +60,7 @@ public class changeGravity : MonoBehaviour
 
     void LateUpdate() {
 
-        ;
+        
 
         if (isCenter)
         {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class playerRotation : MonoBehaviour
@@ -46,7 +47,16 @@ public class playerRotation : MonoBehaviour
 
     public void setRotation(Vector3 a)
     {
-        desiredRotation = Quaternion.LookRotation(a - transform.position);
-        
+        a -= transform.position;
+
+        float x = a.y / (float)Math.Sqrt(a.x * a.x + a.z * a.z) * a.x * -1;
+        float y = (float)Math.Sqrt(a.x * a.x + a.z * a.z);
+        float z = a.y / (float)Math.Sqrt(a.x * a.x + a.z * a.z) * a.z * -1;
+
+
+        Vector3 b = new Vector3(x, y, z);
+
+
+        desiredRotation = Quaternion.LookRotation(b);
     }
 }
