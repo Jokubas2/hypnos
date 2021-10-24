@@ -14,6 +14,9 @@ public class changeGravity : MonoBehaviour
     [SerializeField]
     private Transform daCamera;
 
+    [SerializeField]
+    private GameObject firstGravity;
+
     private Vector3 gravityDirection = new Vector3(0f, -20f, 0f);
     [HideInInspector]
     public Vector3 gDirection = new Vector3(0f, -1f, 0f);
@@ -35,9 +38,13 @@ public class changeGravity : MonoBehaviour
         PlayerRotation = GetComponent<playerRotation>();
         PlayerMovement = GetComponent<playerMovement>();
 
-        //gravityPoint = transform.position;
 
+        //set gravity
+        lr.positionCount = 2;
 
+        gravityPoint = firstGravity.transform.position;
+        updateGravity();
+        isCenter = true;
     }
 
     void Update()
@@ -46,21 +53,18 @@ public class changeGravity : MonoBehaviour
         {
             setGravity();
             PlayerRotation.setRotation(gravityDirection);
+            PlayerMovement.setRotation(gravityDirection);
         }
 
         if(isCenter)
         {
             updateGravity();
             PlayerRotation.setRotation(gravityDirection);
+            PlayerMovement.setRotation(gravityDirection);
         }
-
-        //Debug.Log(gravityPoint);
-        //PlayerRotation.setRotation(gravityPoint);
     }
 
     void LateUpdate() {
-
-        
 
         if (isCenter)
         {
@@ -98,10 +102,6 @@ public class changeGravity : MonoBehaviour
 
             }
 
-
-            
-
-
         }
     }
 
@@ -126,27 +126,13 @@ public class changeGravity : MonoBehaviour
         gDirection = gravityDirection;
         gravityDirection *= gravityStrength;
 
-        //Debug.Log(gravityDirection);
-
         Physics.gravity = gravityDirection;
 
         //PlayerMovement.gDirection = gDirection;
 
-        PlayerRotation.setRotation(gravityPoint);
+        PlayerRotation.setRotation(gravityDirection);
+        PlayerMovement.setRotation(gravityDirection);
+        //PlayerRotation.setRotation(gravityPoint);
     }
-
-    /*void DrawRope()
-    {
-        //If not grappling, don't draw rope
-        if (!joint) return;
-
-        currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime * 8f);
-
-        lr.SetPosition(0, gunTip.position);
-        lr.SetPosition(1, currentGrapplePosition);
-    }*/
-
-
-
 
 }

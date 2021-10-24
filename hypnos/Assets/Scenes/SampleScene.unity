@@ -1186,7 +1186,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390002188}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.409089, y: 3.1882927, z: 3.3770764}
+  m_LocalPosition: {x: 30.3, y: 60.1, z: -23.7}
   m_LocalScale: {x: 1, y: 1.2500002, z: 1}
   m_Children:
   - {fileID: 1227942653}
@@ -1237,6 +1237,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   daCamera: {fileID: 1193470584}
+  firstGravity: {fileID: 1933416152}
   gDirection: {x: 0, y: -1, z: 0}
   gravityStrength: 20
   PlayerRotation: {fileID: 0}
@@ -1248,7 +1249,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390002188}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a93b4c14a82553499b1e6b89e80682a, type: 3}
   m_Name: 

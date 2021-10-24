@@ -169,13 +169,16 @@ public class playerMovement : MonoBehaviour
 
     private void Jump()
     {
+        //Debug.Log(gDirection);
+        //Debug.Log(grounded);
         if (grounded && readyToJump)
         {
             readyToJump = false;
 
             //Add jump forces
-            rb.AddForce(Vector2.up * jumpForce * 1.5f);
-            rb.AddForce(normalVector * jumpForce * 0.5f);
+            Debug.Log("jumped");
+            rb.AddForce(-1*gDirection/20/*Vector2.up*/ * jumpForce * 1.5f);
+            rb.AddForce(-1*gDirection/20/*normalVector*/ * jumpForce * 0.5f);
 
             //If jumping while falling, reset y velocity.
             Vector3 vel = rb.velocity;
@@ -277,7 +280,7 @@ public class playerMovement : MonoBehaviour
 
     private bool IsFloor(Vector3 v)
     {
-        float angle = Vector3.Angle(Vector3.up, v);
+        float angle = Vector3.Angle(-1*gDirection, v);
         return angle < maxSlopeAngle;
     }
 
@@ -292,6 +295,7 @@ public class playerMovement : MonoBehaviour
         int layer = other.gameObject.layer;
         if (whatIsGround != (whatIsGround | (1 << layer))) return;
 
+        
         //Iterate through every collision in a physics update
         for (int i = 0; i < other.contactCount; i++)
         {
@@ -299,6 +303,7 @@ public class playerMovement : MonoBehaviour
             //FLOOR
             if (IsFloor(normal))
             {
+                Debug.Log("ground");
                 grounded = true;
                 cancellingGrounded = false;
                 normalVector = normal;
@@ -326,5 +331,12 @@ public class playerMovement : MonoBehaviour
             moveSpeed = groundSpeed;
         if (!grounded)
             moveSpeed = airSpeed;
+    }
+
+
+
+    public void setRotation(Vector3 a)
+    {
+        gDirection = a;
     }
 }
