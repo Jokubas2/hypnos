@@ -132,6 +132,9 @@ public class changeGravity : MonoBehaviour
 
         PlayerRotation.setRotation(gravityDirection);
         PlayerMovement.setRotation(gravityDirection);
+
+
+
         //PlayerRotation.setRotation(gravityPoint);
     }
 

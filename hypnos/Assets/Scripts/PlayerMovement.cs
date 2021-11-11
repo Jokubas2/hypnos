@@ -52,6 +52,9 @@ public class playerMovement : MonoBehaviour
     [NonSerialized]
     public Vector3 gDirection;
 
+    private Vector3 desinePuse;
+    private Vector3 kairePuse;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -63,6 +66,9 @@ public class playerMovement : MonoBehaviour
         playerScale = transform.localScale;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        desinePuse = new Vector3(1, 0, 0);
+        kairePuse = new Vector3(-1, 0, 0);
 
         //gDirection = ChangeGravity.gDirection;
     }
@@ -338,5 +344,15 @@ public class playerMovement : MonoBehaviour
     public void setRotation(Vector3 a)
     {
         gDirection = a;
+
+        /*float iDesineX;
+        float iDesineZ;
+        iDesineX = (a.z * (float)Math.Sqrt(a.x * a.x * a.y * a.y * a.z * a.z)) / (float)Math.Sqrt(a.x * a.x + a.z * a.z);
+        iDesineZ = (a.x * (float)Math.Sqrt(a.x * a.x * a.y * a.y * a.z * a.z)) / (float)Math.Sqrt(a.x * a.x + a.z * a.z);
+
+        desinePuse.x = iDesineX;
+        desinePuse.y = iDesineZ;*/
+
+
     }
 }
