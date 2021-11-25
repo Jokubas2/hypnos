@@ -47,13 +47,7 @@ public class playerMovement : MonoBehaviour
     private Vector3 normalVector = Vector3.up;
     private Vector3 wallNormalVector;
 
-    //Gravity
-    private changeGravity ChangeGravity;
-    [NonSerialized]
-    public Vector3 gDirection;
 
-    private Vector3 desinePuse;
-    private Vector3 kairePuse;
 
     void Awake()
     {
@@ -66,11 +60,6 @@ public class playerMovement : MonoBehaviour
         playerScale = transform.localScale;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        desinePuse = new Vector3(1, 0, 0);
-        kairePuse = new Vector3(-1, 0, 0);
-
-        //gDirection = ChangeGravity.gDirection;
     }
 
 
@@ -84,8 +73,6 @@ public class playerMovement : MonoBehaviour
         MyInput();
         Look();
         speed();
-
-        //gDirection = ChangeGravity.getGravity();
     }
 
     /// <summary>
@@ -127,7 +114,7 @@ public class playerMovement : MonoBehaviour
     private void Movement()
     {
         //Extra gravity
-        rb.AddForce(gDirection/*Vector3.down*/ * Time.deltaTime * 10);
+        rb.AddForce(transform.up * -1 * Time.deltaTime * 10);
 
         //Find actual velocity relative to where player is looking
         Vector2 mag = FindVelRelativeToLook();
@@ -145,7 +132,7 @@ public class playerMovement : MonoBehaviour
         //If sliding down a ramp, add force down so player stays grounded and also builds speed
         if (crouching && grounded && readyToJump)
         {
-            rb.AddForce(gDirection/*Vector3.down*/ * Time.deltaTime * 3000);
+            rb.AddForce(transform.up * -1/*Vector3.down*/ * Time.deltaTime * 3000);
             return;
         }
 
@@ -183,8 +170,8 @@ public class playerMovement : MonoBehaviour
 
             //Add jump forces
             Debug.Log("jumped");
-            rb.AddForce(-1*gDirection/20/*Vector2.up*/ * jumpForce * 1.5f);
-            rb.AddForce(-1*gDirection/20/*normalVector*/ * jumpForce * 0.5f);
+            rb.AddForce(transform.up/*Vector2.up*/ * jumpForce * 1.5f);
+            rb.AddForce(transform.up/*normalVector*/ * jumpForce * 0.5f);
 
             //If jumping while falling, reset y velocity.
             Vector3 vel = rb.velocity;
@@ -220,18 +207,6 @@ public class playerMovement : MonoBehaviour
         playerCam.transform.localRotation = Quaternion.Euler(xRotation, desiredX, 0);
         orientation.transform.localRotation = Quaternion.Euler(0, desiredX, 0);
 
-        
-        /*float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime * sensMultiplier;
-        float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime * sensMultiplier;
-
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -105f, 105f);
-
-        playerCam.transform.localRotation = Quaternion.Euler(xRotation,0,0);
-
-        transform.Rotate(Vector3.up * mouseX);*/
-
-        
     }
 
     private void CounterMovement(float x, float y, Vector2 mag)
@@ -286,7 +261,7 @@ public class playerMovement : MonoBehaviour
 
     private bool IsFloor(Vector3 v)
     {
-        float angle = Vector3.Angle(-1*gDirection, v);
+        float angle = Vector3.Angle(transform.up, v);
         return angle < maxSlopeAngle;
     }
 
@@ -339,20 +314,4 @@ public class playerMovement : MonoBehaviour
             moveSpeed = airSpeed;
     }
 
-
-
-    public void setRotation(Vector3 a)
-    {
-        gDirection = a;
-
-        /*float iDesineX;
-        float iDesineZ;
-        iDesineX = (a.z * (float)Math.Sqrt(a.x * a.x * a.y * a.y * a.z * a.z)) / (float)Math.Sqrt(a.x * a.x + a.z * a.z);
-        iDesineZ = (a.x * (float)Math.Sqrt(a.x * a.x * a.y * a.y * a.z * a.z)) / (float)Math.Sqrt(a.x * a.x + a.z * a.z);
-
-        desinePuse.x = iDesineX;
-        desinePuse.y = iDesineZ;*/
-
-
-    }
 }
